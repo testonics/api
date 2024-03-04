@@ -1,2 +1,3 @@
-# api
-Makes ACE &amp; Visual accessible through API
+![API-Example](docs/APIExample.png)
+
+![Sample-Output](docs/SampleOutput.png)
