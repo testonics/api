@@ -15,6 +15,11 @@ class VisualController {
 //        return all(new File(image1), new File(image2));
 //    }
 
+    @GetMapping(value = "/healthcheck")
+    String healthcheck() {
+        return "API Running";
+    }
+
     @GetMapping(value = "/visual-comparison")
     Map<String, String> all(@RequestParam File image1, @RequestParam File image2) {
         //Sets the object of Visual Comparison
