@@ -1,6 +1,17 @@
 steps:
+  # Step 1: Use Maven to build the JAR file
+  - name: 'maven:3.8.5-openjdk-17'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        mvn clean package -DskipTests
+
+  # Step 2: Build the Docker image using the JAR file
   - name: 'gcr.io/cloud-builders/docker'
     args: ['build', '-t', 'gcr.io/compare-446607/springboot-app', '.']
+
+  # Step 3: Push the Docker image to Container Registry
   - name: 'gcr.io/cloud-builders/docker'
     args: ['push', 'gcr.io/compare-446607/springboot-app']
 images:
