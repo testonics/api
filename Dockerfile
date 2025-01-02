@@ -1,15 +1,12 @@
-# Use a lightweight JDK base image
-FROM openjdk:17-jdk-slim
-
-# Set the working directory inside the container
+# Stage 1: Build the JAR using Maven
+FROM maven:3.8.5-openjdk-17 AS builder
 WORKDIR /app
+COPY . .
+RUN mvn clean package -DskipTests
 
-# Copy the Spring Boot JAR file into the container
-ARG JAR_FILE=target/*.jar
-COPY ${JAR_FILE} app.jar
-
-# Expose the port the Spring Boot app will run on
+# Stage 2: Create the final Docker image
+FROM openjdk:17-jdk-slim
+WORKDIR /app
+COPY --from=builder /app/target/*.jar app.jar
 EXPOSE 8080
-
-# Define the command to run the application
 ENTRYPOINT ["java", "-jar", "app.jar"]
